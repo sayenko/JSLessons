@@ -4,6 +4,9 @@ function alert(array){
 }
 //minimum
 var array = [45, -12, 7, 56, -84, 42, -6, 0, 18, 37, 0, -67, 5, 76, 9, -43, 20, -5, 79, -80, 3, 61];
+function reverseSortNumbers(number1, number2){
+    return number2 - number1;
+}
 function sortNumbers(number1, number2){
     return number1 - number2;
 }
@@ -13,7 +16,9 @@ var sortedArray = array.sort(sortNumbers)
 alert(sortedArray);
 
 //b.
-var reverseArray = array.reverse()
+
+//var reverseArray = array.reverse()
+var reverseArray = array.reverseSortNumbers();
 alert(reverseArray);
 
 //2.
