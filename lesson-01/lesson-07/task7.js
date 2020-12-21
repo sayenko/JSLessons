@@ -10,17 +10,12 @@ function fillTheText(){
 }
 
 function isExternalLinks(){
-    var divMaximum = document.getElementById('maximum');
-
-    var links = divMaximum.querySelectorAll('ul>li');
-    for(var i = 0; i < links.length; i++){
-        var element = links[i].innerHTML.toString();
-        if(!element.includes('http://internal.com')&&(element.includes(`http://`)||element.includes(`ftp://`))){
-            // links[i].style.background = 'red';
-            link = ' class="external-red"';
-            linkLength = link.length;
-            element = [element.slice(0, 2), link, element.slice(2)].join('');
-            links[i].innerHTML = element;
-        }
-    }
+	var divMaximum = document.getElementById('maximum');
+	var elements = divMaximum.querySelectorAll('li>a');
+	for(var i = 0; i < elements.length; i++){
+		var link = elements[i].innerHTML.toString();
+		if(!link.includes('http://internal.com')&&(link.includes(`http://`)||link.includes(`ftp://`))){
+			elements[i].className = 'external-red';
+		}
+	}
 }
