@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+    <title>Task 9</title>
+</head>
+<body>
+
+<h1>Form with Get method</h1>
+<form>
+    <label>Surname</label><br><input type="text" id="userLastNameGet"><br>
+    <label>Name</label><br><input type="text" id="userFirstNameGet"><br>
+    <label>Age</label><br><input type="text" id="userAgeGet"><br>
+    <label>Address</label><br><input type="text" id="userAddressGet"><br>
+    <input type="button" value="Send by Get" onclick="sendDataByGetMethod()">
+</form>
+
+<br>
+<h1>Form with Post method</h1>
+<form>
+    <label>Surname</label><br><input type="text" id="userLastNamePost"><br>
+    <label>Name</label><br><input type="text" id="userFirstNamePost"><br>
+    <label>Age</label><br><input type="text" id="userAgePost"><br>
+    <label>Address</label><br><input type="text" id="userAddressPost"><br>
+    <input type="button" value="Send by Post" onclick="sendDataByPostMethod()">
+</form>
+
+<script>
+
+    function sendDataByGetMethod(){
+        var nonValidateAge = document.getElementById('userAgeGet').value;
+        if(isNaN(nonValidateAge)||nonValidateAge<1||nonValidateAge>100){
+            alert("Incorrect Age");
+            return;
+        }
+        var userData = {
+            lName:document.getElementById('userLastNameGet').value,
+            fName:document.getElementById('userFirstNameGet').value,
+            age:document.getElementById('userAgeGet').value,
+            address:document.getElementById('userAddressGet').value,
+        };
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/formGet?lName="+userData.lName+"&fName="+userData.fName+"&age="+userData.age+"&address="+userData.address);
+        xhr.setRequestHeader("Content-type","application/json");
+        xhr.send();
+    }
+
+    function sendDataByPostMethod(){
+        var nonValidateAge = document.getElementById('userAgePost').value;
+        if(isNaN(nonValidateAge)||nonValidateAge<1||nonValidateAge>100){
+            alert("Incorrect Age");
+            return;
+        }
+        var userData = {
+            lName:document.getElementById('userLastNamePost').value,
+            fName:document.getElementById('userFirstNamePost').value,
+            age:document.getElementById('userAgePost').value,
+            address:document.getElementById('userAddressPost').value,
+        };
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/formPost");
+        xhr.setRequestHeader("Content-type","application/json");
+        xhr.send(JSON.stringify(userData));
+    }
+</script>
+
+</body>
+</html>
