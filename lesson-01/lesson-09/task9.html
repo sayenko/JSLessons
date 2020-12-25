@@ -8,7 +8,7 @@
 <form>
     <label>Surname</label><br><input type="text" id="userLastNameGet"><br>
     <label>Name</label><br><input type="text" id="userFirstNameGet"><br>
-    <label>Age</label><br><input type="text" id="userAgeGet"><br>
+    <label>Age</label><br><input type="text" id="userAgeGet" onblur="validateAgeGet()"><br>
     <label>Address</label><br><input type="text" id="userAddressGet"><br>
     <input type="button" value="Send by Get" onclick="sendDataByGetMethod()">
 </form>
@@ -18,7 +18,7 @@
 <form>
     <label>Surname</label><br><input type="text" id="userLastNamePost"><br>
     <label>Name</label><br><input type="text" id="userFirstNamePost"><br>
-    <label>Age</label><br><input type="text" id="userAgePost"><br>
+    <label>Age</label><br><input type="text" id="userAgePost" onblur="validateAgePost()"><br>
     <label>Address</label><br><input type="text" id="userAddressPost"><br>
     <input type="button" value="Send by Post" onclick="sendDataByPostMethod()">
 </form>
@@ -26,15 +26,7 @@
 <script>
 
     function sendDataByGetMethod(){
-        var nonValidateAge = document.getElementById('userAgeGet').value;
-        if(isNaN(nonValidateAge)||nonValidateAge<1||nonValidateAge>100){
-            document.getElementById('userAgeGet').style.background = 'red';
-            document.getElementById('userAgeGet').value = "Incorrect Age";
-            return;
-        }
-        else {
-            document.getElementById('userAgeGet').style.background = 'none';
-        }
+        if(!validateAgeGet){ return; }
         var userData = {
             lName:document.getElementById('userLastNameGet').value,
             fName:document.getElementById('userFirstNameGet').value,
@@ -47,27 +39,43 @@
         xhr.setRequestHeader("Content-type","application/json");
         xhr.send();
     }
-
-    function sendDataByPostMethod(){
-        var nonValidateAge = document.getElementById('userAgePost').value;
+    function validateAgeGet(){
+        var nonValidateAge = document.getElementById('userAgeGet').value;
         if(isNaN(nonValidateAge)||nonValidateAge<1||nonValidateAge>100){
-            document.getElementById('userAgePost').style.background = 'red';
-            document.getElementById('userAgePost').value = "Incorrect Age";
-            return;
-        } else {
-            document.getElementById('userAgePost').style.background = 'none';
+            document.getElementById('userAgeGet').style.background = 'pink';
+            document.getElementById('userAgeGet').value = "Incorrect Age";
+            return false;
         }
+        else {
+            document.getElementById('userAgeGet').style.background = 'none';
+            return true;
+        }
+    }
+
+    function sendDataByPostMethod() {
+        if (!validateAgePost) { return; }
         var userData = {
-            lName:document.getElementById('userLastNamePost').value,
-            fName:document.getElementById('userFirstNamePost').value,
-            age:document.getElementById('userAgePost').value,
-            address:document.getElementById('userAddressPost').value,
+            lName: document.getElementById('userLastNamePost').value,
+            fName: document.getElementById('userFirstNamePost').value,
+            age: document.getElementById('userAgePost').value,
+            address: document.getElementById('userAddressPost').value,
         };
 
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/formPost");
-        xhr.setRequestHeader("Content-type","application/json");
+        xhr.setRequestHeader("Content-type", "application/json");
         xhr.send(JSON.stringify(userData));
+    }
+    function validateAgePost() {
+        var nonValidateAge = document.getElementById('userAgePost').value;
+        if (isNaN(nonValidateAge) || nonValidateAge < 1 || nonValidateAge > 100) {
+            document.getElementById('userAgePost').style.background = 'pink';
+            document.getElementById('userAgePost').value = "Incorrect Age";
+            return false;
+        } else {
+            document.getElementById('userAgePost').style.background = 'none';
+            return true;
+        }
     }
 </script>
 
