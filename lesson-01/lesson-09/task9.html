@@ -28,8 +28,12 @@
     function sendDataByGetMethod(){
         var nonValidateAge = document.getElementById('userAgeGet').value;
         if(isNaN(nonValidateAge)||nonValidateAge<1||nonValidateAge>100){
-            alert("Incorrect Age");
+            document.getElementById('userAgeGet').style.background = 'red';
+            document.getElementById('userAgeGet').value = "Incorrect Age";
             return;
+        }
+        else {
+            document.getElementById('userAgeGet').style.background = 'none';
         }
         var userData = {
             lName:document.getElementById('userLastNameGet').value,
@@ -47,8 +51,11 @@
     function sendDataByPostMethod(){
         var nonValidateAge = document.getElementById('userAgePost').value;
         if(isNaN(nonValidateAge)||nonValidateAge<1||nonValidateAge>100){
-            alert("Incorrect Age");
+            document.getElementById('userAgePost').style.background = 'red';
+            document.getElementById('userAgePost').value = "Incorrect Age";
             return;
+        } else {
+            document.getElementById('userAgePost').style.background = 'none';
         }
         var userData = {
             lName:document.getElementById('userLastNamePost').value,
