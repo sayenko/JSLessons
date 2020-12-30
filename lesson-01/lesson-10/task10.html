@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <title>Task 10</title>
+</head>
+<body>
+
+<form>
+    <label>Surname</label><br><input type="text" id="userLastName"><br>
+    <label>Name</label><br><input type="text" id="userFirstName"><br>
+    <label>Age</label><br><input type="text" id="userAge" onblur="validateAge()"><br>
+    <label>Address</label><br><input type="text" id="userAddress"><br><br>
+    <input id="sendDataByGetMethod" type="button" value="Send by Get">
+    <input id="sendDataByPostMethod" type="button" value="Send by Post">
+</form>
+
+<script>
+
+    $('#sendDataByGetMethod').bind('click', function() {
+        if(!validateAge()){ return; }
+        var userData = {
+            userSurname: $('#userLastName').val(),
+            userName: $('#userFirstName').val(),
+            userAge: $('#userAge').val(),
+            userAddress: $('#userAddress').val(),
+        };
+        $.ajax({
+            type:   'GET',
+            contentType: 'application/json',
+            url:    "/userGet?userSurname="+userData.userSurname+"&userName="+userData.userName+"&userAge="+userData.userAge+"&userAddress="+userData.userAddress,
+            success: function (data){
+                console.log('success');
+                console.log(JSON.stringify(data));
+            }
+        });
+    });
+
+    $('#sendDataByPostMethod').bind('click', function () {
+        if (!validateAge()) { return; }
+        var userData = {
+            userSurname: $('#userLastName').val(),
+            userName: $('#userFirstName').val(),
+            userAge: $('#userAge').val(),
+            userAddress: $('#userAddress').val(),
+        };
+        $.ajax({
+            type:   'POST',
+            data:   JSON.stringify(userData),
+            contentType: 'application/json',
+            url:    'http://localhost:3000/userPost',
+            success: function (data){
+                console.log('success');
+                console.log(JSON.stringify(data));
+            }
+        });
+    });
+
+    function validateAge(){
+        var nonValidateAge = $('#userAge').val();
+        if(isNaN(nonValidateAge)||nonValidateAge<1||nonValidateAge>100){
+            $('#userAge').css('background', 'pink');
+            $('#userAge').val('Incorrect Age');
+            return false;
+        }
+        else {
+            $('#userAge').css('background', 'none');
+            return true;
+        }
+    }
+
+</script>
+
+</body>
+</html>
